@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
 
+import 'chat_page.dart';
+
 class Chat {
   final String name;
   final String lastMessage;
   final String profileImageUrl;
-
   Chat({required this.name, required this.lastMessage, required this.profileImageUrl});
 }
 
 class MessagesPage extends StatefulWidget {
+  const MessagesPage({super.key});
+
   @override
   _MessagesPageState createState() => _MessagesPageState();
 }
 
 class _MessagesPageState extends State<MessagesPage> {
   List<Chat> chats = [
-    Chat(name: 'User 1', lastMessage: 'Hello', profileImageUrl: 'https://example.com/image1.png'),
-    Chat(name: 'User 2', lastMessage: 'Hi', profileImageUrl: 'https://example.com/image2.png'),
-    // Add more chats here
+    Chat(name: 'User 1', lastMessage: 'Hello', profileImageUrl: 'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg'),
+    Chat(name: 'User 2', lastMessage: 'Hi', profileImageUrl: 'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg'),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Messages'),
+        title: const Text('Messages'),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               showSearch(context: context, delegate: ChatSearch(chats));
             },
@@ -37,12 +39,25 @@ class _MessagesPageState extends State<MessagesPage> {
       body: ListView.builder(
         itemCount: chats.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(chats[index].profileImageUrl),
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatPage(
+                    recipientName: chats[index].name,
+                    recipientImageUrl: chats[index].profileImageUrl,
+                  ),
+                ),
+              );
+            },
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundImage: NetworkImage(chats[index].profileImageUrl),
+              ),
+              title: Text(chats[index].name),
+              subtitle: Text(chats[index].lastMessage),
             ),
-            title: Text(chats[index].name),
-            subtitle: Text(chats[index].lastMessage),
           );
         },
       ),
@@ -54,14 +69,15 @@ class ChatSearch extends SearchDelegate<Chat> {
   final List<Chat> chats;
 
   ChatSearch(this.chats);
-
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           query = '';
+          FocusScope.of(context).unfocus(); // Close the keyboard
+          close(context, Chat(name: '', lastMessage: '', profileImageUrl: '')); // Close the search
         },
       ),
     ];
@@ -70,7 +86,7 @@ class ChatSearch extends SearchDelegate<Chat> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back),
       onPressed: () {
 
       },

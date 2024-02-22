@@ -1,28 +1,41 @@
 import 'package:flutter/material.dart';
 
+import '../../services/signup_services.dart';
+
 class SignupPage extends StatelessWidget {
+  const SignupPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final SignupService _signupService = SignupService();
+
+    // Define controllers for text fields
+    final TextEditingController _nameController = TextEditingController();
+    final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _panController = TextEditingController();
+    final TextEditingController _phoneNumberController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
+
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 100.0),
+        padding: const EdgeInsets.only(top: 100.0),
         child: Center(
           child: Padding(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Create\nan account',
                       style: TextStyle(
                         fontSize: 42,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Image.asset(
                       'assets/images/globe.png', // Replace 'your_image.png' with your actual image path
                       width: 150,
@@ -31,19 +44,19 @@ class SignupPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
-                  margin: EdgeInsets.all(0),
+                  margin: const EdgeInsets.all(0),
                   height: 4,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.grey, // Adjust color as needed
                     borderRadius: BorderRadius.all(
                       Radius.circular(10),
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Sign up',
                   style: TextStyle(
                     fontSize: 18,
@@ -51,59 +64,87 @@ class SignupPage extends StatelessWidget {
                     color: Color(0xffD2A500),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
-                  decoration: InputDecoration(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
                     labelText: 'Full Name',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
-                  decoration: InputDecoration(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
                     labelText: 'Email',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
-                  decoration: InputDecoration(
+                  controller: _panController,
+                  decoration: const InputDecoration(
                     labelText: 'PAN Card',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
-                  decoration: InputDecoration(
+                  controller: _phoneNumberController,
+                  decoration: const InputDecoration(
                     labelText: 'Phone Number',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
+                  controller: _passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Password',
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                   width: 200,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color(0xff59BD8B),
+                    color: const Color(0xff59BD8B),
                   ),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
+                      backgroundColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 15),
+                      padding: const EdgeInsets.symmetric(vertical: 15),
                       elevation: 0, // Remove elevation
-                      textStyle: TextStyle(color: Colors.white),
+                      textStyle: const TextStyle(color: Colors.white),
                     ),
-                    onPressed: () {},
-                    child: Text('Signup', style: TextStyle(color: Colors.white)),
+                    onPressed: () async {
+                      // Call signup function with controller values
+                      bool signupSuccess = await _signupService.signup(
+                        _nameController.text,
+                        _emailController.text,
+                        _passwordController.text,
+                        'userType', // Replace with actual user type
+                        _panController.text,
+                        _phoneNumberController.text,
+                      );
+
+                      if (signupSuccess) {
+                        // Signup successful, navigate to another screen
+                        // For example, you can navigate to the home screen
+                        Navigator.pushNamed(context, '/home');
+                      } else {
+                        // Signup failed, show error message
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Signup failed. Please try again.'),
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text('Signup', style: TextStyle(color: Colors.white)),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
                     // Navigate to login page

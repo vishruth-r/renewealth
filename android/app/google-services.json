@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "964026866873",
+    "project_id": "innowah-f271c",
+    "storage_bucket": "innowah-f271c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964026866873:android:0aa32acb04577eb94a8f68",
+        "android_client_info": {
+          "package_name": "com.example.renewealth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqUbqjwYFokT2eEVEdM4N7Ucdw7jDFs44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

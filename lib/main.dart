@@ -1,26 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
 import 'package:renewealth/views/screens/login_page.dart';
 import 'package:renewealth/views/screens/messages_page.dart';
 import 'package:renewealth/views/screens/signup_page.dart';
+import 'firebase_options.dart';
 
-void main() {
+
+void main() async {
+  // Ensure that Firebase is initialized before runApp() is called
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Login Demo',
       theme: ThemeData(
-        primaryColor: createMaterialColor(Color(0xFF65B741)),
-        primarySwatch: createMaterialColor(Color(0xFF65B741)),
+        primaryColor: createMaterialColor(const Color(0xFF65B741)),
+        primarySwatch: createMaterialColor(const Color(0xFF65B741)),
       ),
       initialRoute: '/messages',
       routes: {
         '/': (context) => LoginPage(),
-        '/signup': (context) => SignupPage(),
-        '/messages': (context) => MessagesPage(),
+        '/signup': (context) => const SignupPage(),
+        '/messages': (context) => const MessagesPage(),
       },
     );
   }
@@ -35,7 +47,7 @@ class MyApp extends StatelessWidget {
     for (int i = 1; i < 10; i++) {
       strengths.add(0.1 * i);
     }
-    strengths.forEach((strength) {
+    for (var strength in strengths) {
       final double ds = 0.5 - strength;
       swatch[(strength * 1000).round()] = Color.fromRGBO(
         r + ((ds < 0 ? r : (255 - r)) * ds).round(),
@@ -43,7 +55,7 @@ class MyApp extends StatelessWidget {
         b + ((ds < 0 ? b : (255 - b)) * ds).round(),
         1,
       );
-    });
+    }
     return MaterialColor(color.value, swatch);
   }
 }
