@@ -88,7 +88,7 @@ class LoginPage extends StatelessWidget {
 
                       if (loginSuccessful) {
                         // Navigate to the next page
-                        Navigator.pushNamed(context, '/nextPage');
+                        Navigator.pushNamed(context, '/messages');
                       } else {
                         // Show an error message
                         ScaffoldMessenger.of(context).showSnackBar(

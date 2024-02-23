@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../services/signup_services.dart';
 
 class SignupPage extends StatelessWidget {
@@ -8,8 +7,6 @@ class SignupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SignupService _signupService = SignupService();
-
-    // Define controllers for text fields
     final TextEditingController _nameController = TextEditingController();
     final TextEditingController _emailController = TextEditingController();
     final TextEditingController _panController = TextEditingController();
@@ -131,7 +128,7 @@ class SignupPage extends StatelessWidget {
                       if (signupSuccess) {
                         // Signup successful, navigate to another screen
                         // For example, you can navigate to the home screen
-                        Navigator.pushNamed(context, '/home');
+                        Navigator.pushNamed(context, '/messages');
                       } else {
                         // Signup failed, show error message
                         ScaffoldMessenger.of(context).showSnackBar(

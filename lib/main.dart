@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
 import 'package:renewealth/views/screens/login_page.dart';
 import 'package:renewealth/views/screens/messages_page.dart';
 import 'package:renewealth/views/screens/signup_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
 
@@ -11,14 +12,23 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+
   );
 
+  // Check if a token exists in shared preferences
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.getString('token');
 
-  runApp(MyApp());
+  // Determine initial route based on token existence
+  String initialRoute = token != null ? '/messages' : '/';
+
+  runApp(MyApp(initialRoute: initialRoute));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final String initialRoute;
+
+  const MyApp({Key? key, required this.initialRoute}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +38,7 @@ class MyApp extends StatelessWidget {
         primaryColor: createMaterialColor(const Color(0xFF65B741)),
         primarySwatch: createMaterialColor(const Color(0xFF65B741)),
       ),
-      initialRoute: '/messages',
+      initialRoute: initialRoute,
       routes: {
         '/': (context) => LoginPage(),
         '/signup': (context) => const SignupPage(),
