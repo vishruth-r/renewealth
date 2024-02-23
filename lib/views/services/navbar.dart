@@ -37,12 +37,6 @@ class NavBar extends StatelessWidget {
                 icon: Icons.chat,
                 label: 'Chat',
               ),
-              buildTabItem(
-                context: context,
-                index: 3,
-                icon: Icons.person,
-                label: 'Me',
-              ),
             ],
           ),
         ),

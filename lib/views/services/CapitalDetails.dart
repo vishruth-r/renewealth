@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:pie_chart/pie_chart.dart';
 class CapitalDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     List<InvestorData> data = [
-      InvestorData('Investor 1', 20),
-      InvestorData('Investor 2', 30),
-      InvestorData('Investor 3', 50),
+      InvestorData('Tata Power', 20.5),
+      InvestorData('Adani Solar', 12.4),
+      InvestorData('JSW Energy', 10.5),
+      InvestorData('Anil Kumar', 8.2),
+      InvestorData('Sequoia Capital', 7.8),
       // Add more InvestorData objects as needed
     ];
+    Map<String, double> dataMap = {
+      'Tata Power': 20.5,
+      'Adani Solar': 12.4,
+      'JSW Energy': 10.5,
+      'Anil Kumar': 8.2,
+      'Sequoia Capital': 7.8,
+      'Promoters': 40.6,
+
+    };
 
     return Scaffold(
       appBar: AppBar(
@@ -28,7 +40,7 @@ class CapitalDetails extends StatelessWidget {
                       width: 100,
                       height: 100,
                       child: Image.asset(
-                        "assets/images/globe.png",
+                        "assets/images/apartment2.webp",
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -148,16 +160,28 @@ class CapitalDetails extends StatelessWidget {
                         ],
                         rows: [
                           DataRow(cells: [
-                            DataCell(Text('Investor 1')),
-                            DataCell(Text('20%')),
+                            DataCell(Text('Tata Power')),
+                            DataCell(Text('20.5%')),
                           ]),
                           DataRow(cells: [
-                            DataCell(Text('Investor 2')),
-                            DataCell(Text('30%')),
+                            DataCell(Text('Adani Solar')),
+                            DataCell(Text('12.4%')),
                           ]),
                           DataRow(cells: [
-                            DataCell(Text('Investor 3')),
-                            DataCell(Text('50%')),
+                            DataCell(Text('JSW Energy')),
+                            DataCell(Text('10.5%')),
+                          ]),
+                          DataRow(cells: [
+                            DataCell(Text('Anil Kumar')),
+                            DataCell(Text('8.2%')),
+                          ]),
+                          DataRow(cells: [
+                            DataCell(Text('Sequoia Capital')),
+                            DataCell(Text('7.8%')),
+                          ]),
+                          DataRow(cells: [
+                            DataCell(Text('Promoters')),
+                            DataCell(Text('40.6%')),
                           ]),
                           // Add more DataRows as needed
                         ],
@@ -180,30 +204,33 @@ class CapitalDetails extends StatelessWidget {
                     Expanded(
                       child: Container(
                         height: 200,
-                        child: charts.PieChart(
-                          [
-                            charts.Series<InvestorData, String>(
-                              id: 'Investors',
-                              domainFn: (InvestorData investors, _) => investors.investor,
-                              measureFn: (InvestorData investors, _) => investors.allocation,
-                              data: data,
-                              colorFn: (InvestorData investors, _) {
-                                switch (investors.investor) {
-                                  case 'Investor 1':
-                                    return charts.MaterialPalette.blue.shadeDefault;
-                                  case 'Investor 2':
-                                    return charts.MaterialPalette.red.shadeDefault;
-                                  case 'Investor 3':
-                                    return charts.MaterialPalette.green.shadeDefault;
-                                  default:
-                                    return charts.MaterialPalette.gray.shadeDefault;
-                                }
-                              },
-                            )
-                          ],
-                          animate: true,
-                          defaultRenderer: charts.ArcRendererConfig(arcWidth: 60),
-                        ),
+                        child: PieChart(
+                          dataMap: dataMap,
+                          animationDuration: Duration(milliseconds: 800),
+                          chartLegendSpacing: 32,
+                          chartRadius: MediaQuery.of(context).size.width / 3.2,
+                          initialAngleInDegree: 0,
+                          chartType: ChartType.ring,
+                          ringStrokeWidth: 32,
+                          centerText: "HYBRID",
+                          legendOptions: LegendOptions(
+                            showLegendsInRow: false,
+                            legendPosition: LegendPosition.right,
+                            showLegends: true,
+                            legendTextStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          chartValuesOptions: ChartValuesOptions(
+                            showChartValueBackground: true,
+                            showChartValues: true,
+                            showChartValuesInPercentage: false,
+                            showChartValuesOutside: false,
+                            decimalPlaces: 1,
+                          ),
+                          // gradientList: ---To add gradient colors---
+                          // emptyColorGradient: ---Empty Color gradient---
+                        )
                       ),
                     ),
                   ],
@@ -218,7 +245,7 @@ class CapitalDetails extends StatelessWidget {
 
 class InvestorData {
   final String investor;
-  final int allocation;
+  final double allocation;
 
   InvestorData(this.investor, this.allocation);
 }

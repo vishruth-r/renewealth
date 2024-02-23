@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Padding(
-        padding: EdgeInsets.all(5.0),
+        padding: EdgeInsets.all(6.0),
         child: Column(
           children: [
             Container(
@@ -52,13 +52,13 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 20.0),
             Expanded(
               child: ListView.builder(
-                itemCount: 5, // replace with your actual list length
+                itemCount: 2, // replace with your actual list length
                 itemBuilder: (context, index) {
                   return CustomBox(
-                    imagePath: 'assets/images/globe.png', // replace with your actual image paths
+                    imagePath: 'assets/images/Apartment1.jpeg', // replace with your actual image paths
                     content: 'Solar Panel Investment', // replace with your actual content
                     bottomContent: 'ID',
-                    progress: 0.65,// replace with your actual bottom content
+                    progress: 0.67,// replace with your actual bottom content
                   );
                 },
               ),
