@@ -18,8 +18,8 @@ class MessagesPage extends StatefulWidget {
 
 class _MessagesPageState extends State<MessagesPage> {
   List<Chat> chats = [
-    Chat(name: 'User 1', lastMessage: 'Hello', profileImageUrl: 'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg'),
-    Chat(name: 'User 2', lastMessage: 'Hi', profileImageUrl: 'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg'),
+    Chat(name: 'Vishruth', lastMessage: 'Ofcourse', profileImageUrl: 'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg'),
+    Chat(name: 'Anirudh', lastMessage: 'Hey, I wanted some more info about the listing', profileImageUrl: 'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg'),
   ];
 
   @override

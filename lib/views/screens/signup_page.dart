@@ -131,7 +131,7 @@ class SignupPage extends StatelessWidget {
                       if (signupSuccess) {
                         // Signup successful, navigate to another screen
                         // For example, you can navigate to the home screen
-                        Navigator.pushNamed(context, '/home');
+                        Navigator.pushNamed(context, '/home_page');
                       } else {
                         // Signup failed, show error message
                         ScaffoldMessenger.of(context).showSnackBar(

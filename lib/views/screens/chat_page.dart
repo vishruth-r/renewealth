@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ChatPage extends StatelessWidget {
   final String recipientName;
   final String recipientImageUrl;
 
-  const ChatPage({super.key, required this.recipientName, required this.recipientImageUrl});
+  const ChatPage({Key? key, required this.recipientName, required this.recipientImageUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,40 +28,40 @@ class ChatPage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Stack(
-          children: [
-            Image.asset(
-              'assets/images/bg.png',
-              fit: BoxFit.cover,
-            ),
-      Column(
-          children: [
-      Expanded(
-      child: ListView(
-      padding: const EdgeInsets.all(20),
-      children: [
-        MessageBubble(
-          message: 'Hey, how are you?',
-          isSentByMe: true,
-          time: DateTime.now(),
-        ),
-        MessageBubble(
-          message: 'I\'m good, thanks! How about you?',
-          isSentByMe: false,
-          time: DateTime.now(),
-        ),
-        MessageBubble(
-          message: 'I\'m doing great, thanks for asking.',
-          isSentByMe: true,
-          time: DateTime.now(),
-        ),
-        MessageBubble(
-          message: 'Do you want to hang out later?',
-          isSentByMe: false,
-          time: DateTime.now(),
-        ),
-      ],
-    ),
-    ),
+        children: [
+          SvgPicture.asset(
+            'assets/images/bg.svg',
+            fit: BoxFit.cover,
+          ),
+          Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.all(20),
+                  children: [
+                    MessageBubble(
+                      message: 'Hey, how are you? Could you tell me a little more about your listing',
+                      isSentByMe: true,
+                      time: DateTime.now(),
+                    ),
+                    MessageBubble(
+                      message: 'I\'m good, thanks! Yeah we could get on a call at 8 tonight. I\'ll send you the details.',
+                      isSentByMe: false,
+                      time: DateTime.now(),
+                    ),
+                    MessageBubble(
+                      message: 'That would be great, thanks!',
+                      isSentByMe: true,
+                      time: DateTime.now(),
+                    ),
+                    MessageBubble(
+                      message: 'Ofcourse see you at 8.',
+                      isSentByMe: false,
+                      time: DateTime.now(),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                 decoration: BoxDecoration(

@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         primaryColor: createMaterialColor(Color(0xFF65B741)),
         primarySwatch: createMaterialColor(Color(0xFF65B741)),
       ),
-      initialRoute: '/home_page',
+      initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
         '/signup': (context) => SignupPage(),
@@ -38,7 +38,9 @@ class MyApp extends StatelessWidget {
         '/3': (context) => MessagesPage(),
         '/4': (context) => MessagesPage(),
       },
+      debugShowCheckedModeBanner: false,
     );
+
   }
 
   MaterialColor createMaterialColor(Color color) {
