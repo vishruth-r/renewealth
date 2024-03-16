@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
+import 'package:renewealth/views/screens/createListing_page.dart';
+import 'package:renewealth/views/screens/home_page.dart';
 import 'package:renewealth/views/screens/login_page.dart';
 import 'package:renewealth/views/screens/messages_page.dart';
 import 'package:renewealth/views/screens/signup_page.dart';
@@ -20,7 +22,7 @@ void main() async {
   String? token = prefs.getString('token');
 
   // Determine initial route based on token existence
-  String initialRoute = token != null ? '/messages' : '/';
+  String initialRoute = token != null ? '/homepage' : '/';
 
   runApp(MyApp(initialRoute: initialRoute));
 }
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: initialRoute,
       routes: {
-        '/': (context) => LoginPage(),
+        '/homepage': (context) => PropertyDetailsPage(),
         '/signup': (context) => const SignupPage(),
         '/messages': (context) => const MessagesPage(),
       },

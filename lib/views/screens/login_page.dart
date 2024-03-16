@@ -15,7 +15,7 @@ class LoginPage extends StatelessWidget {
         padding: const EdgeInsets.only(top: 100.0),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -87,8 +87,7 @@ class LoginPage extends StatelessWidget {
                       );
 
                       if (loginSuccessful) {
-                        // Navigate to the next page
-                        Navigator.pushNamed(context, '/messages');
+                        Navigator.pushNamed(context, '/home_page');
                       } else {
                         // Show an error message
                         ScaffoldMessenger.of(context).showSnackBar(
