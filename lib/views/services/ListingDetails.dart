@@ -24,8 +24,8 @@ class ListingDetails extends StatelessWidget {
                   Container(
                     width: deviceWidth * 0.8, // Adjust the multiplier as needed
                     height: deviceHeight * 0.25, // Adjust the multiplier as needed
-                    child: Image.network(
-                      'assets/images/apartment2.webp', // replace with your actual image URL
+                    child: Image.asset(
+                      'assets/images/apartment1.webp', // replace with your actual image URL
                       fit: BoxFit.cover,
                     ),
                   ),

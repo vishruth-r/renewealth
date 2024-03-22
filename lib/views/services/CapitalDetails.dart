@@ -40,7 +40,7 @@ class CapitalDetails extends StatelessWidget {
                       width: 100,
                       height: 100,
                       child: Image.asset(
-                        "assets/images/apartment2.webp",
+                        "assets/images/apartment1.webp",
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -51,7 +51,7 @@ class CapitalDetails extends StatelessWidget {
                         children: [
                           Center(
                             child: Text(
-                              "Title",
+                              "Solar Panel Investment",
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
