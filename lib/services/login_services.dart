@@ -38,9 +38,8 @@ class LoginService {
         // If the response is successful, parse the JSON response
         Map<String, dynamic> jsonResponse = jsonDecode(response.body);
 
-        // Store the token
-        if (jsonResponse.containsKey('token')) {
-          await storeToken(jsonResponse['token']);
+        if (jsonResponse.containsKey('token') && jsonResponse.containsKey('person')) {
+          await storeToken(jsonResponse['token'], jsonResponse['person']['id']);
         }
 
         // Check if the login was successful based on the response
@@ -59,12 +58,13 @@ class LoginService {
       return false; // Return false to indicate login failure
     }
   }
-
-  Future<void> storeToken(String token) async {
+  Future<void> storeToken(String token, String id) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
+    await prefs.setString('person_id', id);
+    print(token);
+    print(id);
   }
-
   Future<String?> getFcmToken() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     String? token = await messaging.getToken();

@@ -107,7 +107,6 @@ class LoginPage extends StatelessWidget {
                       );
 
                       if (loginSuccessful) {
-                        // Navigate to the next page
                         Navigator.pushNamed(context, '/home_page');
                       } else {
                         // Show an error message

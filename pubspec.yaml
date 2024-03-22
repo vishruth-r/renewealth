@@ -41,6 +41,9 @@ dependencies:
   firebase_core: ^2.25.4
   charts_flutter: ^0.12.0
   pie_chart: ^5.4.0
+  google_maps_flutter: ^2.5.3
+  flutter_map: ^6.1.0
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:

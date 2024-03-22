@@ -1,13 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:renewealth/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
+import 'package:renewealth/views/screens/createListing_page.dart';
 import 'package:renewealth/views/screens/home_page.dart';
-import 'package:renewealth/views/screens/listings.dart';
 import 'package:renewealth/views/screens/login_page.dart';
 import 'package:renewealth/views/screens/messages_page.dart';
 import 'package:renewealth/views/screens/signup_page.dart';
-import 'package:renewealth/views/services/navbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'firebase_options.dart';
+
 
 void main() async {
   // Ensure that Firebase is initialized before runApp() is called
@@ -22,41 +22,31 @@ void main() async {
   String? token = prefs.getString('token');
 
   // Determine initial route based on token existence
-  String initialRoute = token != null ? '/messages' : '/';
+  String initialRoute = token != null ? '/homepage' : '/';
 
-  runApp(MyApp());
+  runApp(MyApp(initialRoute: initialRoute));
 }
+
 class MyApp extends StatelessWidget {
+  final String initialRoute;
+
+  const MyApp({Key? key, required this.initialRoute}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Login Demo',
       theme: ThemeData(
-        primaryColor: createMaterialColor(Color(0xFF65B741)),
-        primarySwatch: createMaterialColor(Color(0xFF65B741)),
+        primaryColor: createMaterialColor(const Color(0xFF65B741)),
+        primarySwatch: createMaterialColor(const Color(0xFF65B741)),
       ),
-      initialRoute: '/home_page',
+      initialRoute: initialRoute,
       routes: {
-        '/': (context) => LoginPage(),
-        '/signup': (context) => SignupPage(),
-        '/messages': (context) => MessagesPage(),
-        '/home_page' : (context)  => HomePage(),
-        '/navbar' : (context) => Scaffold(
-          bottomNavigationBar: NavBar(
-            currentIndex: 1,
-            onTap: (index) {
-              Navigator.pushNamed(context, '/${index+1}');
-            },
-          ),
-        ),
-        '/1': (context) => HomePage(),
-        '/2': (context) => ListingPage(),
-        '/3': (context) => MessagesPage(),
-        '/4': (context) => MessagesPage(),
+        '/homepage': (context) => PropertyDetailsPage(),
+        '/signup': (context) => const SignupPage(),
+        '/messages': (context) => const MessagesPage(),
       },
-      debugShowCheckedModeBanner: false,
     );
-
   }
 
   MaterialColor createMaterialColor(Color color) {
@@ -69,7 +59,7 @@ class MyApp extends StatelessWidget {
     for (int i = 1; i < 10; i++) {
       strengths.add(0.1 * i);
     }
-    strengths.forEach((strength) {
+    for (var strength in strengths) {
       final double ds = 0.5 - strength;
       swatch[(strength * 1000).round()] = Color.fromRGBO(
         r + ((ds < 0 ? r : (255 - r)) * ds).round(),
@@ -77,7 +67,7 @@ class MyApp extends StatelessWidget {
         b + ((ds < 0 ? b : (255 - b)) * ds).round(),
         1,
       );
-    });
+    }
     return MaterialColor(color.value, swatch);
   }
 }
