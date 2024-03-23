@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:renewealth/views/services/CustomListings.dart';
 import 'package:renewealth/views/services/navbar.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 class ListingPage extends StatefulWidget {
   @override
   _ListingPageState createState() => _ListingPageState();
@@ -9,8 +10,30 @@ class ListingPage extends StatefulWidget {
 
 class _ListingPageState extends State<ListingPage> {
   String selectedButton = 'Active';
+  List<Map<String, dynamic>> listings = [];
 
   @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
+    final response = await http.get(
+      Uri.parse("https://e8a2-2409-40f4-9-507f-d94f-ab52-653d-afde.ngrok-free.app/investments"),
+      headers: <String, String>{
+        'ngrok-skip-browser-warning': '69420',
+      },
+    );
+    if (response.statusCode == 200) {
+      setState(() {
+        listings = List<Map<String, dynamic>>.from(jsonDecode(response.body));
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
@@ -64,13 +87,19 @@ class _ListingPageState extends State<ListingPage> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 3, // replace with your actual list length
+              itemCount: listings.length,
               itemBuilder: (context, index) {
                 return CustomBox(
-                  imagePath: 'assets/images/apartment${index+1}.webp', // replace with your actual image paths
-                  content: 'Solar Panel Investment', // replace with your actual content
-                  bottomContent: 'ID',
-                  progress: 0.65,// replace with your actual bottom content
+                  details: CustomBoxDetails(
+                    imagePath: listings[index]['imageURL'],
+                    content: listings[index]['investeeName'],
+                    bottomContent: listings[index]['description'],
+                    progress: listings[index]['investmentAmountAcquired'] / listings[index]['investmentAmountNeeded'],
+                    location: listings[index]['location'],
+                    apartment: listings[index]['investeeId'],
+                    endTime: listings[index]['lastDateToInvest'],
+                    id: listings[index]['id'],
+                  ),
                 );
               },
             ),

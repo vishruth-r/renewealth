@@ -3,11 +3,7 @@ import 'package:renewealth/views/screens/home_page.dart';
 
 import '../services/newlisting_service.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: PropertyDetailsPage(),
-  ));
-}
+
 
 class PropertyDetailsPage extends StatefulWidget {
   @override

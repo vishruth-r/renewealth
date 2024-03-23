@@ -1,44 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:renewealth/views/services/CustomListings.dart';
 import 'package:renewealth/views/services/navbar.dart';
-
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 class HomePage extends StatefulWidget {
-  final List<String> contentList = [
-    'Mumbai Solar Plan',
-    'Chennai Solar Plan',
-    // Add more content strings as needed
-  ];
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
-  List<String> filteredContentList = [];
-  final List<String> contentList = [
-    'Mumbai Solar Plan',
-    'Chennai Solar Plan',
-    // Add more content strings as needed
-  ];
-
+  List<Map<String, dynamic>> listings = [];
   @override
   void initState() {
     super.initState();
     _searchController.addListener(_filterList);
-    filteredContentList = List.from(widget.contentList);
+    _fetchData();
   }
 
   void _filterList() {
     setState(() {
       if (_searchController.text.isEmpty) {
-        filteredContentList = List.from(widget.contentList);
+        // If the search text is empty, show all listings
+        listings = List.from(listings);
       } else {
-        filteredContentList = widget.contentList
-            .where((content) => content.toLowerCase().contains(_searchController.text.toLowerCase()))
+        // If the search text is not empty, show only the listings where the investeeName contains the search text
+        listings = listings
+            .where((listing) => listing['investeeName'].toLowerCase().contains(_searchController.text.toLowerCase()))
             .toList();
       }
     });
+  }
+  Future<void> _fetchData() async {
+    final response = await http.get(
+      Uri.parse("https://e8a2-2409-40f4-9-507f-d94f-ab52-653d-afde.ngrok-free.app/investments"),
+      headers: <String, String>{
+        'ngrok-skip-browser-warning': '69420',
+      },
+    );
+    print('Response body: ${response.body}');
+    if (response.statusCode == 200) {
+      // if (response.headers['content-type'] != 'application/json') {
+      //   throw Exception('Received non-JSON response');
+      // }
+      setState(() {
+        listings = List<Map<String, dynamic>>.from(jsonDecode(response.body));
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
 
   @override
@@ -90,13 +99,19 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 20.0),
             Expanded(
               child: ListView.builder(
-                itemCount: filteredContentList.length, // replace with your actual list length
+                itemCount: listings.length,
                 itemBuilder: (context, index) {
                   return CustomBox(
-                    imagePath: 'assets/images/Apartment${index+1}.jpeg', // replace with your actual image paths
-                    content: contentList[index],// replace with your actual content
-                    bottomContent: 'ID',
-                    progress: 0.67,// replace with your actual bottom content
+                    details: CustomBoxDetails(
+                      imagePath: listings[index]['imageURL'],
+                      content: listings[index]['investeeName'],
+                      bottomContent: listings[index]['description'],
+                      progress: listings[index]['investmentAmountAcquired'] / listings[index]['investmentAmountNeeded'],
+                      location: listings[index]['location'],
+                      apartment: listings[index]['investeeId'],
+                      endTime: listings[index]['lastDateToInvest'],
+                      id: listings[index]['id'],
+                    ),
                   );
                 },
               ),

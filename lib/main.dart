@@ -22,7 +22,7 @@ void main() async {
   String? token = prefs.getString('token');
 
   // Determine initial route based on token existence
-  String initialRoute = token != null ? '/homepage' : '/';
+  String initialRoute = token != null ? '/homepage' : '/homepage';
 
   runApp(MyApp(initialRoute: initialRoute));
 }
@@ -42,9 +42,11 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: initialRoute,
       routes: {
-        '/homepage': (context) => PropertyDetailsPage(),
+        '/homepage': (context) => HomePage(),
         '/signup': (context) => const SignupPage(),
         '/messages': (context) => const MessagesPage(),
+        '/login': (context) => LoginPage(),
+        '/createListing': (context) => PropertyDetailsPage(),
       },
     );
   }

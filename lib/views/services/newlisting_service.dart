@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../../constants.dart';
 
 class NewListingService {
-  static const String baseUrl = 'http://192.168.90.10:3000';
+  static const String baseUrl = 'https://2015-2409-40f4-9-507f-d94f-ab52-653d-afde.ngrok-free.app';
 
   static Future<bool> createNewListing({
     required String propertyName,

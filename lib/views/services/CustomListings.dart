@@ -1,15 +1,49 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:renewealth/views/services/ListingDetails.dart';
-class CustomBox extends StatelessWidget {
+class CustomBoxDetails {
   final String imagePath;
   final String content;
   final String bottomContent;
   final double progress;
+  final String location;
+  final String apartment;
+  final String endTime;
+  final String id;
 
-  CustomBox({required this.imagePath, required this.content, required this.bottomContent,  required this.progress, });
+  CustomBoxDetails({
+    required this.imagePath,
+    required this.content,
+    required this.bottomContent,
+    required this.progress,
+    required this.location,
+    required this.apartment,
+    required this.endTime,
+    required this.id,
+  });
+}
+class CustomBox extends StatelessWidget {
+  final CustomBoxDetails details;
+
+  CustomBox({required this.details});
+  List<String> imageUrls = [
+    'https://anuhar.com/blog/wp-content/uploads/2022/11/apartment-in-Hyderabad.png',
+    'https://www.sobha.com/blog/wp-content/uploads/2023/07/Apartment-Complex-800x400.png',
+    'https://images.adsttc.com/media/images/637c/cc4e/db20/0f35/7400/b765/newsletter/housing-apartment-at-badade-nagar-studio-frozen-music_1.jpg?1669123187',
+    'https://www.realestate.com.au/news-image/w_800,h_600/v1657586179/news-lifestyle-content-assets/wp-content/production/image11.webp?_i=AA',
+    'https://www.atelierarbo.com/uploads/1/1/9/4/11942319/nagaland-apartment-cover_orig.jpg',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Southmoor_Apartment_Hotel.jpg/220px-Southmoor_Apartment_Hotel.jpg',
+    'https://www.redfin.com/blog/wp-content/uploads/2022/06/3337-Crocker-Dr-1.jpg'
+  ];
 
   @override
+  String getRandomImageUrl() {
+    var random = Random();
+    int randomIndex = random.nextInt(imageUrls.length);
+    return imageUrls[randomIndex];
+  }
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
 
@@ -29,8 +63,9 @@ class CustomBox extends StatelessWidget {
               Container(
                 width: 100,
                 height: 100,
-                child: Image.asset(
-                  imagePath,
+                child: FadeInImage.assetNetwork(
+                  placeholder: 'assets/images/globe.png', // Replace with your placeholder image
+                  image: getRandomImageUrl(),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -41,12 +76,12 @@ class CustomBox extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        content,
+                        details.content,
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
                     Text(
-                      bottomContent,
+                      details.bottomContent,
                       style: TextStyle(fontSize: 6, color: Colors.grey),
                     ),
                     SizedBox(height: 5),
@@ -55,7 +90,7 @@ class CustomBox extends StatelessWidget {
                         Icon(Icons.location_city, color: Colors.green),
                         SizedBox(width: 5),
                         Text(
-                          'Mumbai, Maharashtra',
+                          details.location,
                           style: TextStyle(fontSize: 14, color: Colors.grey),
                         ),
                       ],
@@ -66,7 +101,7 @@ class CustomBox extends StatelessWidget {
                         Icon(Icons.apartment, color: Colors.green),
                         SizedBox(width: 5),
                         Text(
-                          'Green Valley Apartements',
+                          details.apartment,
                           style: TextStyle(fontSize: 14, color: Colors.grey),
                         ),
                       ],
@@ -77,7 +112,7 @@ class CustomBox extends StatelessWidget {
                         Icon(Icons.timer, color: Colors.green),
                         SizedBox(width: 5),
                         Text(
-                          'Ending in 5 days',
+                          details.endTime,
                           style: TextStyle(fontSize: 14, color: Colors.grey),
                         ),
                       ],
@@ -98,7 +133,7 @@ class CustomBox extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ListingDetails()),
+                    MaterialPageRoute(builder: (context) => ListingDetails(id: details.id)),
                   );
                 },
                 child: Text('Details'),
@@ -114,7 +149,7 @@ class CustomBox extends StatelessWidget {
                   child: SizedBox(
                     height: 20, // Adjust this value to increase or decrease the thickness of the progress bar
                     child: LinearProgressIndicator(
-                      value: progress,
+                      value: details.progress,
                       color: Colors.green,
                       backgroundColor: Colors.grey[200],
                     ),
@@ -123,7 +158,7 @@ class CustomBox extends StatelessWidget {
               ),
               SizedBox(width: 10),
               Text(
-                '${(progress * 100).toInt()}%',
+                '${(details.progress * 100).toInt()}%',
                 style: TextStyle(fontSize: 16),
               ),
             ],
