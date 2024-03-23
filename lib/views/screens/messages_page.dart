@@ -19,7 +19,7 @@ class MessagesPage extends StatefulWidget {
 class _MessagesPageState extends State<MessagesPage> {
   List<Chat> chats = [
     Chat(name: 'Vishruth', lastMessage: 'Ofcourse', profileImageUrl: 'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg'),
-    Chat(name: 'Anirudh', lastMessage: 'Hey, I wanted some more info about the listing', profileImageUrl: 'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg'),
+    Chat(name: 'Srinivasan', lastMessage: 'Hey, I wanted some more info about the listing', profileImageUrl: 'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg'),
   ];
 
   @override
@@ -44,9 +44,7 @@ class _MessagesPageState extends State<MessagesPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ChatPage(
-                    recipientName: chats[index].name,
-                    recipientImageUrl: chats[index].profileImageUrl,
+                  builder: (context) => ChatPage(otherPersonName: 'Srinivasan',
                   ),
                 ),
               );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
+import 'package:firebase_core/firebase_core.dart';
+import 'package:renewealth/views/screens/chat_page.dart';
 import 'package:renewealth/views/screens/createListing_page.dart';
-import 'package:renewealth/views/screens/home_page.dart';
-import 'package:renewealth/views/screens/login_page.dart';
 import 'package:renewealth/views/screens/messages_page.dart';
 import 'package:renewealth/views/screens/signup_page.dart';
+import 'package:renewealth/views/services/ListingDetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
@@ -22,7 +22,7 @@ void main() async {
   String? token = prefs.getString('token');
 
   // Determine initial route based on token existence
-  String initialRoute = token != null ? '/homepage' : '/';
+  String initialRoute = token != null ? '/homepage' : '/chat';
 
   runApp(MyApp(initialRoute: initialRoute));
 }
@@ -42,9 +42,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: initialRoute,
       routes: {
-        '/homepage': (context) => PropertyDetailsPage(),
+        '/homepage': (context) => MessagesPage(),
         '/signup': (context) => const SignupPage(),
         '/messages': (context) => const MessagesPage(),
+        '/chat': (context) => ChatPage(otherPersonName: 'Srinivasan'),
       },
     );
   }

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
 
 class LoginService {
   Future<bool> login(String email, String password) async {
