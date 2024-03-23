@@ -17,7 +17,7 @@ class LoginService {
       'password': password,
       'fcmID': fcmToken,
     };
-    print(data);
+    print('$fcmToken');
 
     // Encode the request body as JSON
     String requestBody = jsonEncode(data);

@@ -15,10 +15,10 @@ class SignupPage extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 100.0),
+        padding: const EdgeInsets.only(top: 60.0),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -32,11 +32,11 @@ class SignupPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 8),
                     Image.asset(
                       'assets/images/globe.png', // Replace 'your_image.png' with your actual image path
-                      width: 150,
-                      height: 150,
+                      width: 120,
+                      height: 120,
                       fit: BoxFit.cover,
                     ),
                   ],

@@ -64,10 +64,10 @@ class _ListingPageState extends State<ListingPage> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 5, // replace with your actual list length
+              itemCount: 3, // replace with your actual list length
               itemBuilder: (context, index) {
                 return CustomBox(
-                  imagePath: 'assets/images/apartment2.webp', // replace with your actual image paths
+                  imagePath: 'assets/images/apartment${index+1}.webp', // replace with your actual image paths
                   content: 'Solar Panel Investment', // replace with your actual content
                   bottomContent: 'ID',
                   progress: 0.65,// replace with your actual bottom content

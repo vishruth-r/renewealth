@@ -2,7 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:renewealth/views/services/CustomListings.dart';
 import 'package:renewealth/views/services/navbar.dart';
 
-class HomePage extends StatelessWidget {
+
+class HomePage extends StatefulWidget {
+  final List<String> contentList = [
+    'Mumbai Solar Plan',
+    'Chennai Solar Plan',
+    // Add more content strings as needed
+  ];
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+class _HomePageState extends State<HomePage> {
+  final TextEditingController _searchController = TextEditingController();
+  List<String> filteredContentList = [];
+  final List<String> contentList = [
+    'Mumbai Solar Plan',
+    'Chennai Solar Plan',
+    // Add more content strings as needed
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_filterList);
+    filteredContentList = List.from(widget.contentList);
+  }
+
+  void _filterList() {
+    setState(() {
+      if (_searchController.text.isEmpty) {
+        filteredContentList = List.from(widget.contentList);
+      } else {
+        filteredContentList = widget.contentList
+            .where((content) => content.toLowerCase().contains(_searchController.text.toLowerCase()))
+            .toList();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +69,7 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: 40.0),
             TextField(
-
+              controller: _searchController,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                 hintText: 'Search...',
@@ -47,16 +85,16 @@ class HomePage extends StatelessWidget {
                   borderSide: BorderSide(color: Color(0xFFCCCCCC), width: 2),
                 ),
               ),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.black),
             ),
             SizedBox(height: 20.0),
             Expanded(
               child: ListView.builder(
-                itemCount: 2, // replace with your actual list length
+                itemCount: filteredContentList.length, // replace with your actual list length
                 itemBuilder: (context, index) {
                   return CustomBox(
-                    imagePath: 'assets/images/Apartment1.jpeg', // replace with your actual image paths
-                    content: 'Solar Panel Investment', // replace with your actual content
+                    imagePath: 'assets/images/Apartment${index+1}.jpeg', // replace with your actual image paths
+                    content: contentList[index],// replace with your actual content
                     bottomContent: 'ID',
                     progress: 0.67,// replace with your actual bottom content
                   );

@@ -117,5 +117,6 @@ class ChatSearch extends SearchDelegate<Chat> {
         );
       },
     );
+
   }
 }
