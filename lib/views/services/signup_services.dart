@@ -3,7 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
 
 class SignupService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
@@ -21,7 +21,7 @@ class SignupService {
       'type': 'investor',
       'pan': pan,
       'phoneNumber': phoneNumber,
-      'fcmID': fcmToken, // Include the FCM token in the request body
+      'fcmID': fcmToken,
     };
 
     // Encode the request body as JSON
